@@ -34,6 +34,11 @@ failure handling, and evidence verification.
 - **Indexes a server-side PDF folder in the background**, reporting indexed,
   unchanged, and failed files.
 
+<img width="1085" height="713" alt="Screenshot 2026-11-20 at 8 59 41 AM" src="https://github.com/user-attachments/assets/893dd467-f5e9-433d-8d90-e8571434574a" />
+
+<img width="1681" height="811" alt="Screenshot 2026-11-20 at 8 43 26 AM" src="https://github.com/user-attachments/assets/da5caad0-fcc2-4c56-b679-fa4bd06c8716" />
+
+
 ## Technology & skills
 
 | Area | Technologies | Skills demonstrated |
