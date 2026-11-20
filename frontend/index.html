@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Nexus | Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;450;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="app.js?v=20261007-no-suggestions" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#ask"><span class="brand-mark" aria-hidden="true"></span><span>Nexus<span class="brand-sub">INTELLIGENCE WORKSPACE</span></span></a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav aria-label="Main navigation">
+        <button class="nav-item active" data-view="ask"><i data-lucide="messages-square" aria-hidden="true"></i><span>Ask</span></button>
+        <button class="nav-item" data-view="knowledge"><i data-lucide="library" aria-hidden="true"></i><span>Knowledge</span></button>
+        <button class="nav-item" data-view="evaluation"><i data-lucide="chart-no-axes-combined" aria-hidden="true"></i><span>Evaluation</span></button>
+      </nav>
+      <div class="sidebar-bottom"><span class="status-dot"></span><span id="sidebar-status">Connecting</span><span class="version">N / 01</span></div>
+    </aside>
+    <button class="nav-scrim" id="nav-scrim" aria-label="Close navigation" hidden></button>
+    <div class="main-shell">
+      <header class="topbar">
+        <button class="icon-button hamburger" id="nav-toggle" aria-label="Open navigation" title="Open navigation"><i data-lucide="menu" aria-hidden="true"></i><span class="icon-fallback">Menu</span></button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="view-name">Ask</strong></div>
+        <div class="connection"><span class="mode-badge" id="mode-badge">Connecting</span>
+          <label id="identity-control" hidden><span class="sr-only">Local identity</span><select id="identity"><option value="employee">Employee</option><option value="hr_admin">HR administrator</option><option value="executive">Executive</option></select></label>
+          <form id="token-control" class="token-control" hidden><label class="sr-only" for="token">Production bearer token</label><input id="token" type="password" autocomplete="off" placeholder="Bearer token" spellcheck="false"><button class="button compact" type="submit">Connect</button></form>
+        </div>
+      </header>
+      <div id="global-error" class="global-error" role="alert" hidden><span id="global-error-text"></span><button id="retry-health" class="button compact">Retry connection</button></div>
+      <main>
+        <section id="view-ask" class="view ask-view" aria-labelledby="ask-title">
+          <div class="page-heading"><div><div class="eyebrow">GROUNDED ANSWERS</div><h1 id="ask-title">Ask your knowledge</h1></div><button id="new-session" class="button secondary"><i data-lucide="square-pen" aria-hidden="true"></i>New conversation</button></div>
+          <div class="ask-layout">
+            <div class="conversation-panel">
+              <div class="conversation-top"><span class="status-dot"></span><span id="conversation-label">New conversation</span><label><span class="sr-only">Retrieval mode</span><select id="retrieval-mode"><option value="hybrid_rerank">Hybrid + rerank</option><option value="hybrid">Hybrid</option><option value="vector">Vector</option></select></label></div>
+              <div id="messages" class="messages" aria-live="polite" aria-busy="false"></div>
+              <form id="chat-form" class="composer"><label class="sr-only" for="question">Question</label><textarea id="question" rows="2" placeholder="Ask a question about your documents…" required maxlength="12000"></textarea><div class="composer-footer"><span id="chat-status" role="status">Ready</span><button class="button" id="send-question" type="submit"><i data-lucide="arrow-up" aria-hidden="true"></i>Ask</button></div></form>
+            </div>
+            <aside class="context-panel" aria-label="Workspace context"><div class="section-heading"><h2>Workspace context</h2><i data-lucide="database" aria-hidden="true"></i></div><dl class="context-stats"><div><dt>Documents</dt><dd id="document-count">—</dd></div><div><dt>Indexed chunks</dt><dd id="chunk-count">—</dd></div></dl><div class="provider-details"><span>Answer provider</span><strong id="answer-provider">—</strong><span>Embedding provider</span><strong id="embedding-provider">—</strong></div><div class="section-heading memory-heading"><h2>Preferences</h2><button id="refresh-memory" class="icon-button" aria-label="Refresh preferences" title="Refresh preferences"><i data-lucide="refresh-cw" aria-hidden="true"></i><span class="icon-fallback">Refresh</span></button></div><div id="preferences" class="preferences"></div><form id="memory-form" class="memory-form"><label for="preference-key">Preference</label><input id="preference-key" placeholder="Key" required maxlength="100"><label class="sr-only" for="preference-value">Preference value</label><input id="preference-value" placeholder="Value" required maxlength="1000"><button class="button secondary" type="submit"><i data-lucide="plus" aria-hidden="true"></i>Save preference</button><span id="memory-status" class="form-status" role="status"></span></form></aside>
+          </div>
+        </section>
+        <section id="view-knowledge" class="view" hidden aria-labelledby="knowledge-title">
+          <div class="page-heading"><div><div class="eyebrow">SOURCE LIBRARY</div><h1 id="knowledge-title">Knowledge</h1></div><button id="refresh-documents" class="button secondary"><i data-lucide="refresh-cw" aria-hidden="true"></i>Refresh</button></div>
+          <div class="ingestion-band pdf-indexing"><div class="ingest-form"><button id="index-pdfs" class="button" type="button"><i data-lucide="file-scan" aria-hidden="true"></i><span id="index-pdfs-label">Index PDFs</span></button><span id="index-status" class="form-status" role="status"></span><div id="index-report" aria-live="polite" aria-busy="false"></div></div></div>
+          <div class="library-toolbar"><h2>Documents <span id="library-count" class="count-label"></span></h2><label class="search-box"><i data-lucide="search" aria-hidden="true"></i><span class="sr-only">Search documents</span><input id="document-search" type="search" placeholder="Search title or department"></label></div><div id="documents" class="document-grid" aria-live="polite"></div>
+        </section>
+        <section id="view-evaluation" class="view" hidden aria-labelledby="evaluation-title">
+          <div class="page-heading"><div><div class="eyebrow">RETRIEVAL QUALITY</div><h1 id="evaluation-title">Evaluation</h1></div><button id="refresh-evaluation" class="button secondary"><i data-lucide="refresh-cw" aria-hidden="true"></i>Refresh</button></div>
+          <form id="evaluation-form" class="evaluation-controls"><label>Retrieval mode<select id="evaluation-mode"><option value="all">All modes</option><option value="vector">Vector</option><option value="hybrid">Hybrid</option><option value="hybrid_rerank">Hybrid + rerank</option></select></label><label>Top K<input id="evaluation-k" type="number" value="5" min="1" max="100" required></label><button class="button" type="submit"><i data-lucide="play" aria-hidden="true"></i>Run evaluation</button><span id="evaluation-status" role="status" class="form-status"></span></form>
+          <div class="section-heading"><h2>Run history</h2></div><div id="evaluation-runs" aria-live="polite"></div><details class="dataset-section"><summary>Evaluation dataset</summary><div id="evaluation-dataset"></div></details>
+        </section>
+      </main>
+      <footer class="workspace-footer"><span>NEXUS</span><span id="footer-status">Knowledge workspace</span></footer>
+    </div>
+  </div>
+  <dialog id="source-dialog" aria-labelledby="source-title"><div class="modal-header"><div><div class="eyebrow">SOURCE INSPECTOR</div><h2 id="source-title">Source</h2></div><button id="close-source" class="icon-button" aria-label="Close source" title="Close source"><i data-lucide="x" aria-hidden="true"></i><span class="icon-fallback">Close</span></button></div><div id="source-body" class="modal-body"></div></dialog>
+</body>
+</html>
