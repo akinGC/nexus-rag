@@ -287,35 +287,5 @@ production-scale performance claim is implied.
 | [frontend](frontend) | Browser workspace and evidence inspection |
 | [tests](tests) | Focused behavior and integration tests |
 
-## Interview walkthrough
 
-1. **Frame the problem:** Document search should return inspectable evidence, not
-   just a plausible answer. Introduce the ingestion-to-answer architecture.
-2. **Show ingestion:** Index a small, non-sensitive PDF corpus, inspect its chunks,
-   then reindex to demonstrate unchanged-file skipping.
-3. **Compare retrieval modes:** Ask the same question with vector, hybrid, and
-   hybrid + rerank. Inspect differences in evidence; do not assume one mode always wins.
-4. **Inspect an answer:** Open citations and **Why this answer**. Explain the
-   distinction between model-estimated support, quote validation, and actual correctness.
-5. **Demonstrate context:** Ask "explain again" and show how recent conversation
-   history resolves the topic.
-6. **Discuss trade-offs:** Explain three-store consistency, reranker latency versus
-   isolation, process-local jobs, and the work needed for production authentication.
 
-## Limitations & next steps
-
-- **Authentication:** Local identities are selectable demo roles. Non-local mode
-  rejects identity-dependent requests until real authentication is implemented.
-- **Graph scope:** Expansion is limited to same-section neighbors, not entity
-  extraction or general multi-hop reasoning.
-- **Scale:** Keyword retrieval scans authorized chunks. Larger corpora need a
-  dedicated lexical index; indexing needs durable jobs and shared coordination.
-- **Consistency:** Vector and graph writes are not atomic across stores. Partial
-  failures can require manual reconciliation despite cleanup attempts.
-- **Conversation UX:** History is persisted, but the browser has no saved-conversation picker.
-- **Supported integrations:** The exposed ingestion flow supports PDFs and the
-  answer workflow uses Gemini; web/SQL ingestion and alternative LLM providers are not integrated.
-- **Evaluation and memory:** Evaluation dashboards and semantic long-term memory
-  are not implemented end-to-end, even where frontend scaffolding exists.
-- **Validation:** Live-service integration tests, a labeled retrieval/answer
-  evaluation dataset, and measured latency/quality baselines remain next steps.
